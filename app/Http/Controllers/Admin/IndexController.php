@@ -51,9 +51,10 @@ class IndexController extends Controller
 //                echo $data['admin_admins'];
                 $user = DB::table('admin')->where(array('admin_user'=>session('admin_admins')))->update($data);
                 if($user){
-                    return redirect('admin/welcome');
+                    return back()->with('errors','修改密码成功!');
+//                    return redirect('admin/welcome');
                 }else{
-                    return back()->with('message','修改密码失败!');
+                    return back()->with('errors','修改密码失败!');
                 }
 //                echo '验证成功';
             }else{

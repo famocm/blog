@@ -28,12 +28,19 @@
         <p style="color:red">{{session("message")}}</p>
     @endif
     <form method="post" onsubmit="return changePass()" action="{{url('admin/pass')}}">
-        @if(count($errors))
+        @if(count($errors)>0)
+
             <div class="mark">
+                @if(is_object($errors))
                 @foreach($errors->all() as $error)
                     <p>{{$error}}</p>
                 @endforeach
+                @else
+                    <p>{{$errors}}</p>
+                @endif
             </div>
+
+
         @endif
         {{csrf_field()}}
         {{--<input type="hidden" name="_token" value="X25wGVjFqDXvq7vAUAJTjTAHfX0RhkGufucRdzGh">--}}
