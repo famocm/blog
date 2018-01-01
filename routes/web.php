@@ -25,5 +25,6 @@ Route::group(['middleware'=>['web','is_login']],function(){
     Route::get('admin/welcome','Admin\IndexController@welcome');
     Route::get('admin/loginout','Admin\IndexController@loginout');
     Route::any('admin/pass','Admin\IndexController@pass');
+    Route::resource('admin/cate', 'Admin\CateController');
 });
 
