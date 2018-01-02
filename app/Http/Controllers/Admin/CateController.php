@@ -10,7 +10,24 @@ class CateController extends Controller
 {
     //路由 get.Admin/cate
     public function index(){
-        return view('admin.cate.index');
+    	// echo $_GET;
+    	if($input = Input::all()){
+    		$where=null;
+    		// dd($input);
+    		if($input['name']!=null){
+    			$where= $input['name'];
+    		}
+    		$cate = DB::table('cate')->where('name','like',"%{$where}%")->select()->paginate(10);
+    		$count = DB::table('cate')->where('name','like',"%{$where}%")->select()->count();
+    		return view('admin.cate.index',compact('cate','count'));
+    	}else{
+    		$cate = DB::table('cate')->select()->paginate(10);
+    		$count = DB::table('cate')->select()->count();
+    		// dd($cate);
+    		// var_dump($cate);die;
+        	return view('admin.cate.index',compact('cate','count'));
+    	}
+    	
     }
 
     //路由 post.Admin/cate
@@ -27,9 +44,9 @@ class CateController extends Controller
         $data['time']=time();
         $dd = DB::table('cate')->insert($data);
         if($dd){
-            return showMessage(['message'=>'添加分类成功！','url' =>url('admin/cate')]);
+            return showMessage(['message'=>'添加分类成功！','url' =>url('admin/cate/index')]);
         }else{
-            return showMessage(['message'=>'添加分类失败！','url' =>url('admin/cate')]);
+            return showMessage(['message'=>'添加分类失败！','url' =>url('admin/cate/index')]);
         }
     }
 

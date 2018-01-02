@@ -29,7 +29,7 @@
     <!--结果集标题与导航组件 结束-->
     
     <div class="result_wrap">
-        <form action="{{url('admin/cate')}}" method="post">
+        <form action="{{url('admin/cate/docreate')}}" method="post">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>

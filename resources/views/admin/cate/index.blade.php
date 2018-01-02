@@ -17,19 +17,18 @@
 
 	<!--结果页快捷搜索框 开始-->
 	<div class="search_wrap">
-        <form action="" method="post">
+        <form action="{{url('admin/cate/index')}}" method="post">
+        {{csrf_field()}}
             <table class="search_tab">
                 <tr>
-                    <th width="120">选择分类:</th>
+                    <!-- <th width="120">选择分类:</th>
                     <td>
-                        <select onchange="javascript:location.href=this.value;">
-                            <option value="">全部</option>
-                            <option value="http://www.baidu.com">百度</option>
-                            <option value="http://www.sina.com">新浪</option>
+                        <select onchange="javascript:location.href=this.value;" name='pid'>
+                            <option value="0">根分类</option>
                         </select>
-                    </td>
-                    <th width="70">关键字:</th>
-                    <td><input type="text" name="keywords" placeholder="关键字"></td>
+                    </td> -->
+                    <th width="70">分类名称:</th>
+                    <td><input type="text" name="name" placeholder="分类名称"></td>
                     <td><input type="submit" name="sub" value="查询"></td>
                 </tr>
             </table>
@@ -56,81 +55,44 @@
                 <table class="list_tab">
                     <tr>
                         <th class="tc" width="5%"><input type="checkbox" name=""></th>
-                        <th class="tc">排序</th>
+                        <!-- <th class="tc">排序</th> -->
                         <th class="tc">ID</th>
-                        <th>标题</th>
-                        <th>审核状态</th>
-                        <th>点击</th>
-                        <th>发布人</th>
-                        <th>更新时间</th>
-                        <th>评论</th>
+                        <th>分类名称</th>
+                        <th>分类说明</th>
+                        <th>关键词</th>
+                        <th>描述</th>
+                        <th>添加时间</th>
+                        <!-- <th></th> -->
                         <th>操作</th>
                     </tr>
+                    @foreach($cate as $v)
                     <tr>
                         <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
-                        <td class="tc">
+                       <!--  <td class="tc">
                             <input type="text" name="ord[]" value="0">
-                        </td>
-                        <td class="tc">59</td>
+                        </td> -->
+                        <td class="tc">{{$v->id}}</td>
                         <td>
-                            <a href="#">Apple iPhone 6 Plus (A1524) 16GB 金色 移动联通电信4G手机</a>
+                            <a href="#">{{$v->name}}</a>
                         </td>
-                        <td>0</td>
-                        <td>2</td>
-                        <td>admin</td>
-                        <td>2014-03-15 21:11:01</td>
-                        <td></td>
+                        <td>{{$v->title}}</td>
+                        <td>{{$v->keywords}}</td>
+                        <td>{{$v->description}}</td>
+                        <td>{{date('Y-m-d H:i:s',$v->time)}}</td>
+                        <!-- <td></td> -->
                         <td>
                             <a href="#">修改</a>
                             <a href="#">删除</a>
                         </td>
                     </tr>
-                    
-                    <tr>
-                        <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
-                        <td class="tc">
-                            <input type="text" name="ord[]" value="0">
-                        </td>
-                        <td class="tc">59</td>
-                        <td>
-                            <a href="#">三星 SM-G5308W 白色 移动4G手机 双卡双待</a>
-                        </td>
-                        <td>0</td>
-                        <td>2</td>
-                        <td>admin</td>
-                        <td>2014-03-15 21:11:01</td>
-                        <td></td>
-                        <td>
-                            <a href="#">修改</a>
-                            <a href="#">删除</a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
-                        <td class="tc">
-                            <input type="text" name="ord[]" value="0">
-                        </td>
-                        <td class="tc">59</td>
-                        <td>
-                            <a href="#">荣耀 6 (H60-L11) 3GB内存增强版 白色 移动4G手机</a>
-                        </td>
-                        <td>0</td>
-                        <td>2</td>
-                        <td>admin</td>
-                        <td>2014-03-15 21:11:01</td>
-                        <td></td>
-                        <td>
-                            <a href="#">修改</a>
-                            <a href="#">删除</a>
-                        </td>
-                    </tr>
+                    @endforeach
                 </table>
 
 
 <div class="page_nav">
 <div>
-<a class="first" href="/wysls/index.php/Admin/Tag/index/p/1.html">第一页</a> 
+{{$cate->links()}}
+<!-- <a class="first" href="/wysls/index.php/Admin/Tag/index/p/1.html">第一页</a> 
 <a class="prev" href="/wysls/index.php/Admin/Tag/index/p/7.html">上一页</a> 
 <a class="num" href="/wysls/index.php/Admin/Tag/index/p/6.html">6</a>
 <a class="num" href="/wysls/index.php/Admin/Tag/index/p/7.html">7</a>
@@ -138,13 +100,13 @@
 <a class="num" href="/wysls/index.php/Admin/Tag/index/p/9.html">9</a>
 <a class="num" href="/wysls/index.php/Admin/Tag/index/p/10.html">10</a> 
 <a class="next" href="/wysls/index.php/Admin/Tag/index/p/9.html">下一页</a> 
-<a class="end" href="/wysls/index.php/Admin/Tag/index/p/11.html">最后一页</a> 
-<span class="rows">11 条记录</span>
+<a class="end" href="/wysls/index.php/Admin/Tag/index/p/11.html">最后一页</a>  -->
+<span class="rows">共{{$count}}条记录</span>
 </div>
 </div>
 
 
-
+<!-- 
                 <div class="page_list">
                     <ul>
                         <li class="disabled"><a href="#">&laquo;</a></li>
@@ -155,7 +117,7 @@
                         <li><a href="#">5</a></li>
                         <li><a href="#">&raquo;</a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </form>

@@ -25,6 +25,9 @@ Route::group(['middleware'=>['web','is_login']],function(){
     Route::get('admin/welcome','Admin\IndexController@welcome');
     Route::get('admin/loginout','Admin\IndexController@loginout');
     Route::any('admin/pass','Admin\IndexController@pass');
-    Route::resource('admin/cate', 'Admin\CateController');
+    //分类
+    Route::any('admin/cate/index', 'Admin\CateController@index');
+    Route::any('admin/cate/create', 'Admin\CateController@create');
+    Route::any('admin/cate/docreate', 'Admin\CateController@store');
 });
 
