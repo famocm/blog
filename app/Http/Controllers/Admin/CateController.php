@@ -14,24 +14,46 @@ class CateController extends Controller
     	if($input = Input::all()){
     		$where=null;
     		// dd($input);
-    		if($input['name']!=null){
-    			$where= $input['name'];
+    		if($input['pid']!=null){
+    			$where= $input['pid'];
     		}
-    		$cate = DB::table('cate')->where('name','like',"%{$where}%")->select()->paginate(10);
-    		$count = DB::table('cate')->where('name','like',"%{$where}%")->select()->count();
-    		return view('admin.cate.index',compact('cate','count'));
+    		$cate = DB::table('cate')->where('pid',"{$where}")->select()->paginate(10);
+    		$data = DB::table('cate')->where('pid',0)->get();
+    		$count = DB::table('cate')->where('pid',"{$where}")->select()->count();
+    		return view('admin.cate.index',compact('cate','count','data'));
     	}else{
     		$cate = DB::table('cate')->select()->paginate(10);
+            $data = DB::table('cate')->where('pid',0)->get();
     		$count = DB::table('cate')->select()->count();
     		// dd($cate);
     		// var_dump($cate);die;
-        	return view('admin.cate.index',compact('cate','count'));
+        	return view('admin.cate.index',compact('cate','count','data'));
     	}
     	
     }
 
+//    //二级递归分类
+//    public function getTree($data)
+//    {
+//        $arr = array();
+//        foreach ($data as $k=>$v){
+//            if($v->pid==0){
+////                $data[$k]["names"] = $data[$k]["name"];
+//                $arr[] = $data[$k];
+//                foreach ($data as $m=>$n){
+//                    if($n->pid == $v->id){
+////                        $data[$m]["names"] = '├─ '.$data[$m]['name'];
+//                        $arr[] = $data[$m];
+//                    }
+//                }
+//            }
+//        }
+//        return $arr;
+//    }
+
     //路由 post.Admin/cate
     public function store(){
+        date_default_timezone_set('PRC');
         $input = Input::all();
 //        var_dump($input);die;
         $data['name']=$input['name'];
@@ -56,23 +78,18 @@ class CateController extends Controller
         return view('admin.cate.add',compact('data'));
     }
 
-    //路由 get.Admin/cate/show
-    public function show(){
-
+    //修改
+    public function edit($id){
+        $data = DB::table('cate')->where(array('pid'=>0))->get();
+        $cate = DB::table('cate')->where(array('id'=>$id))->first();
+//        echo "<pre/>";
+//        print_r($cate);
+//        die;
+        return view('admin.cate.edit',compact('data','cate'));
     }
 
     //路由 get.Admin/cate/update
     public function update(){
-
-    }
-
-    //路由 get.Admin/cate/destroy
-    public function destroy(){
-
-    }
-
-    //路由 get.Admin/cate/edit
-    public function edit(){
 
     }
 }

@@ -21,14 +21,16 @@
         {{csrf_field()}}
             <table class="search_tab">
                 <tr>
-                    <!-- <th width="120">选择分类:</th>
+                    <th width="120">选择分类查询:</th>
                     <td>
-                        <select onchange="javascript:location.href=this.value;" name='pid'>
-                            <option value="0">根分类</option>
+                        <select name='pid'>
+                            @foreach($data as $a)
+                                    <option value=" {{$a->id}} ">{{$a->name}}</option>
+                            @endforeach
                         </select>
-                    </td> -->
-                    <th width="70">分类名称:</th>
-                    <td><input type="text" name="name" placeholder="分类名称"></td>
+                    </td>
+                    {{--<th width="70">分类名称:</th>--}}
+                    {{--<td><input type="text" name="name" placeholder="分类名称"></td>--}}
                     <td><input type="submit" name="sub" value="查询"></td>
                 </tr>
             </table>
@@ -54,7 +56,7 @@
             <div class="result_content">
                 <table class="list_tab">
                     <tr>
-                        <th class="tc" width="5%"><input type="checkbox" name=""></th>
+                        {{--<th class="tc" width="5%"><input type="checkbox" name=""></th>--}}
                         <!-- <th class="tc">排序</th> -->
                         <th class="tc">ID</th>
                         <th>分类名称</th>
@@ -67,7 +69,7 @@
                     </tr>
                     @foreach($cate as $v)
                     <tr>
-                        <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
+                        {{--<td class="tc"><input type="checkbox" name="id[]" value="59"></td>--}}
                        <!--  <td class="tc">
                             <input type="text" name="ord[]" value="0">
                         </td> -->
@@ -81,7 +83,7 @@
                         <td>{{date('Y-m-d H:i:s',$v->time)}}</td>
                         <!-- <td></td> -->
                         <td>
-                            <a href="#">修改</a>
+                            <a href="{{url('admin/cate/edit/id/'.$v->id)}}">修改</a>
                             <a href="#">删除</a>
                         </td>
                     </tr>
