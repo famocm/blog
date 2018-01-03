@@ -14,12 +14,15 @@ class CateController extends Controller
     	if($input = Input::all()){
     		$where=null;
     		// dd($input);
-    		if($input['pid']!=null){
+    		if(isset($input['pid'])){
     			$where= $input['pid'];
+    			$cate = DB::table('cate')->where('pid',"{$where}")->select()->paginate(10);
+    			$count = DB::table('cate')->where('pid',"{$where}")->select()->count();
+    		}else{
+    			$cate = DB::table('cate')->select()->paginate(10);
+    			$count = DB::table('cate')->select()->count();
     		}
-    		$cate = DB::table('cate')->where('pid',"{$where}")->select()->paginate(10);
     		$data = DB::table('cate')->where('pid',0)->get();
-    		$count = DB::table('cate')->where('pid',"{$where}")->select()->count();
     		return view('admin.cate.index',compact('cate','count','data'));
     	}else{
     		$cate = DB::table('cate')->select()->paginate(10);
@@ -53,7 +56,6 @@ class CateController extends Controller
 
     //路由 post.Admin/cate
     public function store(){
-        date_default_timezone_set('PRC');
         $input = Input::all();
 //        var_dump($input);die;
         $data['name']=$input['name'];
@@ -90,6 +92,48 @@ class CateController extends Controller
 
     //路由 get.Admin/cate/update
     public function update(){
+    	$input = Input::all();
+    	$id = $input['id'];
+//        var_dump($input);die;
+        $data['name']=$input['name'];
+        $data['title']=$input['title'];
+        $data['keywords']=$input['keywords'];
+        $data['description']=$input['description'];
+        $data['pid']=$input['pid'];
+        $dd = DB::table('cate')->where('id',"{$id}")->update($data);
+        if($dd){
+            return showMessage(['message'=>'修改分类成功!','url' =>url('admin/cate/index')]);
+        }else{
+            return showMessage(['message'=>'修改分类失败！','url' =>url('admin/cate/index')]);
+        }
+    }
+
+    //删除分类操作
+    public function del(){
+    	$input = Input::all();
+    	$id = $input['id'];
+    	$cate = DB::table('cate')->where('pid',"{$id}")->select()->count();
+    	if($cate){
+    		$data=[
+    			'status'=>3,
+    			'msg'=>'此分类下还有子分类，不能删除'
+    		];
+    		return $data;
+    	}else{
+    		$dd = DB::table('cate')->where('id',"{$id}")->delete();
+    		if($dd){
+    			$data=[
+    				'status'=>1,
+    				'msg'=>'删除分类成功'
+    			];
+    		}else{
+    			$data=[
+    				'status'=>1,
+    				'msg'=>'删除分类失败'
+    			];	
+    		}
+    		return $data;
+    	}
 
     }
 }

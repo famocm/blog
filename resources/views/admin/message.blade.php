@@ -29,7 +29,7 @@
             @endif
 
             @if($data['ok'])
-                <script language="javascript">setTimeout("goUrl('{{$data['url']}}')",{{$data['jumpTime'] }});</script>
+                <script language="javascript">setTimeout("this.location.href='+{{$data['url']}}+')",{{$data['jumpTime']}});</script>
             @endif
         </div>
     </div>

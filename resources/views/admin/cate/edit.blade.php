@@ -31,6 +31,7 @@
     <div class="result_wrap">
         <form action="{{url('admin/cate/update')}}" method="post">
             {{csrf_field()}}
+            <input type="hidden" name='id' value="{{$cate->id}}">
             <table class="add_tab">
                 <tbody>
                     <tr>

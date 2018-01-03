@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="{{asset('resources/views/admin/style/font/css/font-awesome.min.css')}}">
     <script type="text/javascript" src="{{asset('resources/views/admin/style/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{asset('resources/views/admin/style/js/ch-ui.admin.js')}}"></script>
+    <script type="text/javascript" src="{{asset('resources/org/layer/layer.js')}}"></script>
 </head>
 <body>
     <!--面包屑导航 开始-->
@@ -84,7 +85,7 @@
                         <!-- <td></td> -->
                         <td>
                             <a href="{{url('admin/cate/edit/id/'.$v->id)}}">修改</a>
-                            <a href="#">删除</a>
+                            <a href="javascript:;" onclick="del({{$v->id}})">删除</a>
                         </td>
                     </tr>
                     @endforeach
@@ -128,4 +129,23 @@
 
 
 </body>
+<script type="text/javascript">
+    function del(id){
+        layer.confirm('您确定要删除这个分类吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.post("{{url('admin/cate/del')}}",{'_token':"{{csrf_token()}}",'id':id},function (data) {
+                if(data.status==1){
+                    location.href = location.href;
+                    layer.msg(data.msg, {icon: 6});
+                }else{
+                    layer.msg(data.msg, {icon: 5});
+                }
+            });
+//            layer.msg('的确很重要', {icon: 1});
+        }, function(){
+
+        });
+    }
+</script>
 </html>

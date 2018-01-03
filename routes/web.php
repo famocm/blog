@@ -30,6 +30,8 @@ Route::group(['middleware'=>['web','is_login']],function(){
     Route::get('admin/cate/create', 'Admin\CateController@create');
     Route::any('admin/cate/docreate', 'Admin\CateController@store');
     Route::get('admin/cate/edit/id/{id}', 'Admin\CateController@edit');
+    Route::any('admin/cate/update', 'Admin\CateController@update');
+    Route::any('admin/cate/del', 'Admin\CateController@del');
 
 });
 
