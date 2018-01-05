@@ -33,3 +33,22 @@ function showMessage(Array $array){
     //  return redirect('/message')->with($array);
 }
 
+//二级递归分类
+function tree($data){
+    $arr = array();
+    foreach ($data as $k=>$v){
+        if($v->pid==0){
+            $data[$k]->names = $v->name;
+            $arr[] = $data[$k];
+            foreach ($data as $m=>$n){
+                if($n->pid == $v->id){
+                    $data[$m]->names = '├─ '.$n->name;
+                    $arr[] = $data[$m];
+                }
+            }
+        }
+    }
+    return $arr;
+}
+
+

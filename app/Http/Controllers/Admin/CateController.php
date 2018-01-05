@@ -13,20 +13,23 @@ class CateController extends Controller
     	// echo $_GET;
     	if($input = Input::all()){
     		$where=null;
-    		// dd($input);
-    		if(isset($input['pid'])){
-    			$where= $input['pid'];
-    			$cate = DB::table('cate')->where('pid',"{$where}")->select()->paginate(10);
-    			$count = DB::table('cate')->where('pid',"{$where}")->select()->count();
+//    		 dd($input);
+    		if(isset($input['name'])){
+    			$where= $input['name'];
+                $cate = DB::table('cate')->where('name',"like","%{$where}%")->select()->paginate(20);
+                $count = DB::table('cate')->where('name',"like","%{$where}%")->select()->count();
     		}else{
-    			$cate = DB::table('cate')->select()->paginate(10);
-    			$count = DB::table('cate')->select()->count();
-    		}
-    		$data = DB::table('cate')->where('pid',0)->get();
+                $cate = DB::table('cate')->select()->paginate(20);
+                $count = DB::table('cate')->select()->count();
+            }
+            $data = tree($cate);
+//    		dd($data);
     		return view('admin.cate.index',compact('cate','count','data'));
     	}else{
-    		$cate = DB::table('cate')->select()->paginate(10);
-            $data = DB::table('cate')->where('pid',0)->get();
+    		$cate = DB::table('cate')->select()->paginate(20);
+    		$data=tree($cate);
+//    		dd($data);
+//            $data = DB::table('cate')->where('pid',0)->get();
     		$count = DB::table('cate')->select()->count();
     		// dd($cate);
     		// var_dump($cate);die;
@@ -34,25 +37,6 @@ class CateController extends Controller
     	}
     	
     }
-
-//    //二级递归分类
-//    public function getTree($data)
-//    {
-//        $arr = array();
-//        foreach ($data as $k=>$v){
-//            if($v->pid==0){
-////                $data[$k]["names"] = $data[$k]["name"];
-//                $arr[] = $data[$k];
-//                foreach ($data as $m=>$n){
-//                    if($n->pid == $v->id){
-////                        $data[$m]["names"] = '├─ '.$data[$m]['name'];
-//                        $arr[] = $data[$m];
-//                    }
-//                }
-//            }
-//        }
-//        return $arr;
-//    }
 
     //路由 post.Admin/cate
     public function store(){
@@ -128,7 +112,7 @@ class CateController extends Controller
     			];
     		}else{
     			$data=[
-    				'status'=>1,
+    				'status'=>2,
     				'msg'=>'删除分类失败'
     			];	
     		}
