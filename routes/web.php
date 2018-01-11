@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware'=>['web','is_status']],function(){
+    Route::get('/','Home\IndexController@index');
 });
 Route::group(['middleware'=>['web']],function(){
     Route::any('admin/login','Admin\LoginController@login');
@@ -31,23 +31,32 @@ Route::group(['middleware'=>['web','is_login'],'prefix'=>'admin','namespace'=>'A
     Route::get('admin/index','AdminController@index');
     Route::any('admin/create','AdminController@create');
     Route::get('admin/edit/id/{id}','AdminController@edit');
-    Route::any('admin/update','AdminController@update');
-    Route::any('admin/del','AdminController@del');
+    Route::post('admin/update','AdminController@update');
+    Route::post('admin/del','AdminController@del');
     //分类
     Route::any('cate/index', 'CateController@index');
     Route::get('cate/create', 'CateController@create');
-    Route::any('cate/docreate', 'CateController@store');
+    Route::post('cate/docreate', 'CateController@store');
     Route::get('cate/edit/id/{id}', 'CateController@edit');
-    Route::any('cate/update', 'CateController@update');
-    Route::any('cate/del', 'CateController@del');
+    Route::post('cate/update', 'CateController@update');
+    Route::post('cate/del', 'CateController@del');
     //文章
     Route::any('article/index', 'ArticleController@index');
     Route::get('article/create', 'ArticleController@create');
-    Route::any('article/docreate', 'ArticleController@docreate');
+    Route::post('article/docreate', 'ArticleController@docreate');
     Route::get('article/edit/id/{id}', 'ArticleController@edit');
-    Route::any('article/update', 'ArticleController@update');
+    Route::post('article/update', 'ArticleController@update');
+    Route::post('article/del', 'ArticleController@del');
+    //友情链接
+    Route::get('link/index','LinkController@index');
+    Route::any('link/create','LinkController@create');
+    Route::get('link/edit/id/{id}','LinkController@edit');
+    Route::post('link/update','LinkController@update');
+    Route::post('link/del','LinkController@del');
+    //网站配置
+    Route::any('system/index','SystemController@index');
 
-
+    
 
 });
 

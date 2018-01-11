@@ -12,7 +12,7 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/welcome')}}">首页</a> &raquo; 分类列表
+        <i class="fa fa-home"></i> <a href="{{url('admin/welcome')}}">首页</a> &raquo; 文章列表
     </div>
     <!--面包屑导航 结束-->
 
@@ -133,10 +133,10 @@
 </body>
 <script type="text/javascript">
     function del(id){
-        layer.confirm('您确定要删除这个分类吗？', {
+        layer.confirm('您确定要删除这篇文章吗？', {
             btn: ['确定','取消'] //按钮
         }, function(){
-            $.post("{{url('admin/cate/del')}}",{'_token':"{{csrf_token()}}",'id':id},function (data) {
+            $.post("{{url('admin/article/del')}}",{'_token':"{{csrf_token()}}",'id':id},function (data) {
                 if(data.status==1){
                     location.href = location.href;
                     layer.msg(data.msg, {icon: 6});

@@ -33,7 +33,7 @@
             <div class="short_wrap">
                 {{--<a href="#"><i class="fa fa-plus"></i>新增文章</a>--}}
                 {{--<a href="#"><i class="fa fa-recycle"></i>批量删除</a>--}}
-                <a href="{{url('admin/admin/index')}}"><i class="fa fa-recycle"></i>全部文章</a>
+                <a href="{{url('admin/admin/index')}}"><i class="fa fa-recycle"></i>全部管理员</a>
                 <a href="javascript:location.reload();"><i class="fa fa-refresh"></i>刷新</a>
             </div>
         </div>
@@ -41,7 +41,7 @@
     <!--结果集标题与导航组件 结束-->
     
     <div class="result_wrap">
-        <form action="{{url('admin/admin/create')}}" method="post">
+        <form action="{{url('admin/link/create')}}" method="post">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>

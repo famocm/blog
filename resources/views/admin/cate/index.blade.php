@@ -134,7 +134,7 @@
         layer.confirm('您确定要删除这个分类吗？', {
             btn: ['确定','取消'] //按钮
         }, function(){
-            $.post("{{url('admin/cate/del')}}",{'_token':"{{csrf_token()}}",'id':id},function (data) {
+            $.post("{{url('admin/article/del')}}",{'_token':"{{csrf_token()}}",'id':id},function (data) {
                 if(data.status==1){
                     location.href = location.href;
                     layer.msg(data.msg, {icon: 6});

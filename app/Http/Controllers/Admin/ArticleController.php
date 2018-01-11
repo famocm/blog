@@ -102,4 +102,28 @@ class ArticleController extends Controller
             }
         }
     }
+
+
+    //删除
+    public function del(){
+        if($input = Input::all()){
+            $article = DB::table('article')->where('id',"{$input['id']}")->first();
+            $dd = DB::table('article')->where('id',"{$input['id']}")->delete();
+            if($dd){
+                $article->picname = str_replace("http://localhost/blog1",".",$article->picname);
+                unlink($article->picname);
+                $data=[
+                    'status'=>1,
+                    'msg'=>'删除文章成功'
+                ];
+            }else{
+                $data=[
+                    'status'=>2,
+                    'msg'=>'删除文章失败'
+                ];
+            }
+            return $data;
+        }
+    }
+
 }
