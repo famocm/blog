@@ -47,7 +47,7 @@ class LoginController extends Controller
 
 //    //加密测试
 //    public function mima(){
-//        $str = 'cc789456';
+//        $str = '';
 //        echo md5(md5($str));
 //        echo '<br/>';
 //        echo encrypt('asdfghjk');

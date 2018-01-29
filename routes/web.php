@@ -10,9 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('message/index','Home\IndexController@message');
 Route::group(['middleware'=>['web','is_status']],function(){
     Route::get('/','Home\IndexController@index');
+    Route::get('/content/id/{id}','Home\IndexController@content');
+    Route::get('/list/cate_id/{cate_id}','Home\IndexController@newlist');
+    Route::post('/search','Home\IndexController@search');
+    Route::post('/num','Home\IndexController@num');
+    Route::get('/me','Home\IndexController@me');
 });
 Route::group(['middleware'=>['web']],function(){
     Route::any('admin/login','Admin\LoginController@login');

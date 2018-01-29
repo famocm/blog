@@ -18,8 +18,7 @@ class HomeStatus
     {
         $system = DB::table('system')->first();
         if($system->status == 1){
-            echo '站点暂时关闭使用！';exit;
-            return redirect('home/message');
+            return redirect('message/index');
         }
         return $next($request);
     }

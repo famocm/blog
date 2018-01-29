@@ -110,7 +110,7 @@ class ArticleController extends Controller
             $article = DB::table('article')->where('id',"{$input['id']}")->first();
             $dd = DB::table('article')->where('id',"{$input['id']}")->delete();
             if($dd){
-                $article->picname = str_replace("http://localhost/blog1",".",$article->picname);
+                $article->picname = str_replace("http://www.blogchen.cn/",".",$article->picname);
                 unlink($article->picname);
                 $data=[
                     'status'=>1,
